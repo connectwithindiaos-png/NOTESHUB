@@ -7,7 +7,7 @@ import Breadcrumbs from '../components/seo/Breadcrumbs'
 import CourseNav from '../components/navigation/CourseNav'
 import { getArticleSchema, getBreadcrumbSchema } from '../utils/schema'
 import { getCanonicalUrl, getNoteUrl } from '../utils/canonicalUrl'
-import { fetchNoteDetail } from '../utils/api'
+import { fetchNoteDetail, incrementNoteView, incrementNoteDownload } from '../utils/api'
 
 export default function NotePage() {
   const { noteSlug } = useParams()
@@ -19,7 +19,11 @@ export default function NotePage() {
     setLoading(true)
     setError('')
     fetchNoteDetail(noteSlug)
-      .then(data => { setNote(data); setLoading(false) })
+      .then(data => {
+        setNote(data)
+        setLoading(false)
+        if (data?.id) incrementNoteView(data.id).catch(() => {})
+      })
       .catch(() => { setNote(null); setLoading(false); setError('not available') })
   }, [noteSlug])
 
@@ -97,7 +101,7 @@ export default function NotePage() {
 
                   {note.fileUrl && (
                     <motion.div className="flex items-center gap-3 mb-10" initial={{ opacity: 0, y: 10 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.4, delay: 0.1 }}>
-                      <a href={note.fileUrl} download className="inline-flex items-center gap-2 px-6 py-3 bg-amber-500 text-white font-semibold rounded-xl hover:bg-amber-400 transition-colors focus:outline-none focus:ring-2 focus:ring-amber-300">
+                      <a href={note.fileUrl} download onClick={() => { incrementNoteDownload(note.id).then(r => { if (r) setNote(prev => ({ ...prev, downloads: r.downloads })) }).catch(() => {}) }} className="inline-flex items-center gap-2 px-6 py-3 bg-amber-500 text-white font-semibold rounded-xl hover:bg-amber-400 transition-colors focus:outline-none focus:ring-2 focus:ring-amber-300">
                         <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" /></svg>
                         Download PDF
                       </a>

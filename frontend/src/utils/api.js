@@ -120,6 +120,14 @@ export function fetchNoteDetail(noteSlug) {
   return fetchJSON(`/notes/${noteSlug}`)
 }
 
+export function incrementNoteView(noteId) {
+  return fetchJSON(`/notes/${noteId}/view`, { method: 'PATCH' })
+}
+
+export function incrementNoteDownload(noteId) {
+  return fetchJSON(`/notes/${noteId}/download`, { method: 'PATCH' })
+}
+
 // Search
 export function searchContent(query) {
   return fetchJSON(`/resolve/search/${encodeURIComponent(query)}`)
