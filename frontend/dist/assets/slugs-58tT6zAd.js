@@ -1,0 +1,1 @@
+function e(e){let t=e.match(/(?:semester-)?sem(\d+)/)||e.match(/semester-(\d+)/);return t?parseInt(t[1]):1}function t(e){let t=[`th`,`st`,`nd`,`rd`],n=e%100;return e+(t[(n-20)%10]||t[n]||t[0])}export{t as n,e as t};

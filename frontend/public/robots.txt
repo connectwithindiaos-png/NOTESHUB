@@ -1,0 +1,15 @@
+User-agent: *
+Allow: /courses
+Allow: /course/
+Allow: /note/
+Allow: /search
+Allow: /about
+Allow: /contact
+Disallow: /admin
+Disallow: /dashboard
+Disallow: /login
+Disallow: /register
+Disallow: /api
+Disallow: /profile
+Sitemap: https://noteshub.com/sitemap.xml
+Host: https://noteshub.com

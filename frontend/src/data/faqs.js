@@ -1,0 +1,64 @@
+export const faqs = {
+  home: [
+    {
+      question: 'What is NotesHub?',
+      answer: 'NotesHub is a free online platform providing high-quality engineering and college notes for B.Tech, BCA, B.Sc CS, and other undergraduate programs. We offer semester-wise, subject-wise study material including handwritten notes, topic summaries, previous year question papers, and reference guides.'
+    },
+    {
+      question: 'Are the notes completely free?',
+      answer: 'Yes, all notes on NotesHub are completely free to download and use. We believe in accessible education for everyone. Simply browse your course and semester, find the subject you need, and download the PDF notes instantly without any registration.'
+    },
+    {
+      question: 'Which courses do you cover?',
+      answer: 'We cover B.Tech in CSE, AI, Data Science, ML, IT, ECE, EE, ME, as well as BCA and B.Sc Computer Science. Each course includes all semester subjects with comprehensive study material curated from top university resources.'
+    },
+    {
+      question: 'How are the notes organized?',
+      answer: 'Notes are organized by course > semester > subject for easy navigation. Each subject page includes topic-wise notes, unit-wise breakdown, important questions, and reference materials. You can also search for specific topics using our search feature.'
+    },
+    {
+      question: 'Can I contribute my own notes?',
+      answer: 'Absolutely! We welcome contributions from students and educators. You can share your handwritten notes, typed summaries, or curated study guides through our upload feature. All contributions are reviewed for quality before being published.'
+    },
+    {
+      question: 'Are these notes helpful for exam preparation?',
+      answer: 'Yes, our notes are designed specifically for exam preparation. Each note includes key concepts, important formulas, solved examples, previous year questions, and exam tips. Students from top engineering colleges across India use NotesHub for their semester exam preparation.'
+    }
+  ],
+  'btech-cse': [
+    {
+      question: 'What subjects are covered in B.Tech CSE Semester 1?',
+      answer: 'B.Tech CSE Semester 1 typically covers Mathematics I (Calculus & Linear Algebra), Physics I, Chemistry, Programming in C, English Communication, and Engineering Mechanics. These core subjects build the foundation for advanced computer science topics.'
+    },
+    {
+      question: 'How can I download B.Tech CSE notes?',
+      answer: 'Simply navigate to your semester and subject page, select the notes you need, and click the Download button. All PDF notes are available for instant download. You can also preview notes before downloading to ensure they cover your syllabus.'
+    },
+    {
+      question: 'Are the B.Tech CSE notes according to latest syllabus?',
+      answer: 'Yes, all notes are updated according to the latest AICTE-approved syllabus and common to most Indian universities including AKTU, RGPV, VTU, RTU, PTU, JNTU, and others. We regularly update content to match curriculum changes.'
+    },
+    {
+      question: 'Do you provide handwritten notes for CSE subjects?',
+      answer: 'Yes, we have a large collection of handwritten notes for CSE subjects. Handwritten notes are particularly helpful for understanding complex concepts and are often preferred by students for last-minute revision before exams.'
+    }
+  ],
+  bca: [
+    {
+      question: 'What is BCA course duration?',
+      answer: 'BCA (Bachelor of Computer Applications) is a 3-year undergraduate program divided into 6 semesters. The course covers computer applications, programming, database management, web development, and software engineering.'
+    },
+    {
+      question: 'Which subjects are important in BCA?',
+      answer: 'Key BCA subjects include Programming in C, Data Structures, Database Management Systems, Operating Systems, Computer Networks, Java Programming, Web Technologies, Software Engineering, and Python Programming.'
+    },
+    {
+      question: 'Can I get a job after BCA?',
+      answer: 'Yes, BCA graduates are in high demand in the IT industry. Common roles include Software Developer, Web Developer, System Analyst, Database Administrator, and Technical Support Engineer. Many students also pursue MCA for advanced career opportunities.'
+    }
+  ]
+};
+
+export function getFAQs(page) {
+  return faqs[page] || faqs.home;
+}

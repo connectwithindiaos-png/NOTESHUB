@@ -1,0 +1,46 @@
+import { motion, AnimatePresence } from 'framer-motion'
+
+export default function ConfirmModal({ open, title, message, confirmLabel, onConfirm, onCancel, destructive }) {
+  return (
+    <AnimatePresence>
+      {open && (
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/30"
+          onClick={onCancel}
+        >
+          <motion.div
+            initial={{ opacity: 0, scale: 0.95, y: 10 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            exit={{ opacity: 0, scale: 0.95, y: 10 }}
+            onClick={(e) => e.stopPropagation()}
+            className="w-full max-w-sm bg-white dark:bg-stone-800 rounded-2xl border border-stone-200 dark:border-stone-700 shadow-xl p-6"
+          >
+            <h3 className="font-serif text-lg text-stone-900 dark:text-stone-100 mb-2">{title}</h3>
+            <p className="font-sans text-sm text-stone-500 dark:text-stone-400 mb-6">{message}</p>
+            <div className="flex gap-3 justify-end">
+              <button
+                onClick={onCancel}
+                className="px-4 py-2 rounded-xl text-sm font-mono text-stone-600 dark:text-stone-400 bg-stone-100 dark:bg-stone-700 hover:bg-stone-200 dark:hover:bg-stone-600 transition-all"
+              >
+                Cancel
+              </button>
+              <button
+                onClick={onConfirm}
+                className={`px-4 py-2 rounded-xl text-sm font-mono text-white transition-all ${
+                  destructive
+                    ? 'bg-red-500 hover:bg-red-400'
+                    : 'bg-amber-500 hover:bg-amber-400'
+                }`}
+              >
+                {confirmLabel || 'Confirm'}
+              </button>
+            </div>
+          </motion.div>
+        </motion.div>
+      )}
+    </AnimatePresence>
+  )
+}
