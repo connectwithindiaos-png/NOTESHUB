@@ -5,7 +5,7 @@ import toast from 'react-hot-toast'
 
 const emptyForm = {
   courseSlug: '', semesterId: '', subjectId: '', title: '', description: '', driveUrl: '',
-  fileType: 'pdf', isPremium: false, isFree: true, tags: '',
+  fileType: 'pdf', isFree: true, tags: '',
 }
 
 export default function AdminPYQs() {
@@ -87,7 +87,6 @@ export default function AdminPYQs() {
         category: 'pyq',
         fileType: form.fileType,
         tags: form.tags ? form.tags.split(',').map(t => t.trim()) : [],
-        isPremium: form.isPremium === true || form.isPremium === 'true',
         isFree: form.isFree === true || form.isFree === 'true',
       }
       if (editing) {
@@ -118,7 +117,6 @@ export default function AdminPYQs() {
       description: pyq.description || '',
       driveUrl: pyq.driveUrl || '',
       fileType: pyq.fileType || 'pdf',
-      isPremium: pyq.isPremium || false,
       isFree: pyq.isFree || true,
       tags: Array.isArray(pyq.tags) ? pyq.tags.join(', ') : (pyq.tags || ''),
     })
@@ -240,15 +238,7 @@ export default function AdminPYQs() {
                 <input type="checkbox" className="hidden" checked={form.isFree === true || form.isFree === 'true'} onChange={(e) => setForm({ ...form, isFree: e.target.checked })} />
                 <span className="font-mono text-xs text-stone-500 dark:text-stone-400 group-hover:text-stone-700 dark:group-hover:text-stone-300 transition-colors">Free</span>
               </label>
-              <label className="flex items-center gap-2.5 cursor-pointer group">
-                <div className={`w-5 h-5 rounded-md border-2 flex items-center justify-center transition-all ${form.isPremium === true || form.isPremium === 'true' ? 'bg-amber-500 border-amber-500' : 'border-stone-300 dark:border-stone-500 group-hover:border-stone-400'}`}>
-                  {(form.isPremium === true || form.isPremium === 'true') && (
-                    <svg className="w-3 h-3 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" /></svg>
-                  )}
-                </div>
-                <input type="checkbox" className="hidden" checked={form.isPremium === true || form.isPremium === 'true'} onChange={(e) => setForm({ ...form, isPremium: e.target.checked })} />
-                <span className="font-mono text-xs text-stone-500 dark:text-stone-400 group-hover:text-stone-700 dark:group-hover:text-stone-300 transition-colors">Premium</span>
-              </label>
+
             </div>
           </div>
           <div className="mb-4">
@@ -315,7 +305,6 @@ export default function AdminPYQs() {
                     <td className="px-4 py-3.5">
                       <div className="flex gap-1.5">
                         {pyq.isFree && <span className="px-2 py-0.5 rounded text-[10px] font-mono bg-emerald-50 dark:bg-emerald-900/30 text-emerald-600 dark:text-emerald-400">free</span>}
-                        {pyq.isPremium && <span className="px-2 py-0.5 rounded text-[10px] font-mono bg-amber-50 dark:bg-amber-900/30 text-amber-600 dark:text-amber-400">premium</span>}
                       </div>
                     </td>
                     <td className="px-4 py-3.5 font-mono text-sm font-semibold text-stone-700 dark:text-stone-300">{pyq.downloads || 0}</td>

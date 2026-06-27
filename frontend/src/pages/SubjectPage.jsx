@@ -75,7 +75,6 @@ export default function SubjectPage() {
   }, [subjectSlug])
 
   useEffect(() => {
-    if (!subject) return
     const tab = activeTab
     if (tab === 'notes' && notes === null) {
       setTabLoading('notes')

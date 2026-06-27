@@ -18,7 +18,7 @@ export function unslugify(slug) {
 }
 
 export function getSemesterNumber(slug) {
-  const match = slug.match(/(?:semester-)?sem(\d+)/) || slug.match(/semester-(\d+)/);
+  const match = slug.match(/(?:semester-)?sem(\d+)/) || slug.match(/semester-(\d+)/) || slug.match(/^(\d+)$/);
   return match ? parseInt(match[1]) : 1;
 }
 
