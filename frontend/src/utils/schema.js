@@ -1,14 +1,16 @@
+import { SITE_URL } from './config'
+
 export function getWebsiteSchema() {
   return {
     '@context': 'https://schema.org',
     '@type': 'WebSite',
     name: 'NotesHub',
-    url: 'https://noteshub.com',
+    url: SITE_URL,
     potentialAction: {
       '@type': 'SearchAction',
       target: {
         '@type': 'EntryPoint',
-        urlTemplate: 'https://noteshub.com/search?q={search_term_string}'
+        urlTemplate: `${SITE_URL}/search?q={search_term_string}`
       },
       'query-input': 'required name=search_term_string'
     }
@@ -21,8 +23,8 @@ export function getOrganizationSchema() {
     '@type': 'Organization',
     name: 'NotesHub',
     description: 'Free engineering and college notes platform',
-    url: 'https://noteshub.com',
-    logo: 'https://noteshub.com/logo.webp',
+    url: SITE_URL,
+    logo: `${SITE_URL}/logo.webp`,
     sameAs: [
       'https://twitter.com/noteshub',
       'https://facebook.com/noteshub'
@@ -34,7 +36,7 @@ export function getSearchActionSchema() {
   return {
     '@context': 'https://schema.org',
     '@type': 'SearchAction',
-    target: 'https://noteshub.com/search?q={search_term_string}',
+    target: `${SITE_URL}/search?q={search_term_string}`,
     'query-input': 'required name=search_term_string'
   };
 }
@@ -72,7 +74,7 @@ export function getArticleSchema({ title, description, url, image, datePublished
       name: 'NotesHub',
       logo: {
         '@type': 'ImageObject',
-        url: 'https://noteshub.com/logo.webp'
+        url: `${SITE_URL}/logo.webp`
       }
     }
   };
@@ -106,7 +108,7 @@ export function getCourseSchema({ name, description, provider }) {
     provider: {
       '@type': 'Organization',
       name: provider || 'NotesHub',
-      sameAs: 'https://noteshub.com'
+      sameAs: SITE_URL
     }
   };
 }

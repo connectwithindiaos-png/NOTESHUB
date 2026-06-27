@@ -16,9 +16,9 @@ async function migrateSettings() {
     console.log('Settings table ready');
 
     const defaults = [
-      { key: 'telegram_url', value: 'https://t.me/noteshub' },
-      { key: 'whatsapp_url', value: 'https://wa.me/1234567890' },
-      { key: 'email', value: 'hello@noteshub.com' },
+      { key: 'telegram_url', value: process.env.DEFAULT_TELEGRAM_URL || 'https://t.me/noteshub' },
+      { key: 'whatsapp_url', value: process.env.DEFAULT_WHATSAPP_URL || 'https://wa.me/1234567890' },
+      { key: 'email', value: process.env.DEFAULT_EMAIL || 'hello@noteshub.com' },
     ];
 
     for (const { key, value } of defaults) {

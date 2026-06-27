@@ -1,4 +1,5 @@
-const API_BASE = import.meta.env.VITE_API_URL || '/api/v1'
+import { API_URL } from './config'
+const API_BASE = API_URL
 
 const KEY_MAP = {
   download_count: 'downloads',

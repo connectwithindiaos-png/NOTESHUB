@@ -1,8 +1,8 @@
-const BASE_URL = 'https://noteshub.com';
+import { SITE_URL } from './config'
 
 export function getCanonicalUrl(path) {
   const cleanPath = path.startsWith('/') ? path : `/${path}`;
-  return `${BASE_URL}${cleanPath}`;
+  return `${SITE_URL}${cleanPath}`;
 }
 
 export function getCourseUrl(courseSlug) {
@@ -21,4 +21,4 @@ export function getNoteUrl(noteSlug) {
   return `/note/${noteSlug}`;
 }
 
-export { BASE_URL };
+export { SITE_URL };

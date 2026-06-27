@@ -20,6 +20,7 @@ module.exports = {
     refreshSecret: process.env.JWT_REFRESH_SECRET || 'dev-refresh-secret',
     refreshExpiresIn: process.env.JWT_REFRESH_EXPIRES_IN || '30d',
   },
+  siteUrl: process.env.SITE_URL || process.env.CORS_ORIGIN || 'http://localhost:5173',
   cors: {
     origin: process.env.CORS_ORIGIN || 'http://localhost:5173',
   },

@@ -1,10 +1,11 @@
 import { Link } from 'react-router-dom';
 import { getBreadcrumbSchema } from '../../utils/schema';
+import { SITE_URL } from '../../utils/config';
 import SchemaMarkup from './SchemaMarkup';
 
 export default function Breadcrumbs({ items }) {
   const breadcrumbItems = [
-    { name: 'Home', url: 'https://noteshub.com' },
+    { name: 'Home', url: SITE_URL },
     ...items
   ];
 
@@ -25,7 +26,7 @@ export default function Breadcrumbs({ items }) {
                 )}
                 <meta itemProp="position" content={String(index + 1)} />
                 {index < breadcrumbItems.length - 1 ? (
-                  <Link to={item.url.replace('https://noteshub.com', '') || '/'} itemProp="item" className="hover:text-blue-600 transition-colors">
+                  <Link to={item.url.replace(SITE_URL, '') || '/'} itemProp="item" className="hover:text-blue-600 transition-colors">
                     <span itemProp="name">{item.name}</span>
                   </Link>
                 ) : (

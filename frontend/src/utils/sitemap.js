@@ -115,6 +115,8 @@ const SUBJECTS = {
   }
 };
 
+import { SITE_URL } from './config'
+
 function getLastMod() {
   const now = new Date();
   return now.toISOString().split('T')[0];
@@ -132,16 +134,17 @@ function xmlUrl(loc, changefreq, priority, lastmod) {
 export function generateSitemapXml() {
   const lastmod = getLastMod();
   const urls = [];
+  const base = SITE_URL
 
   // Home
-  urls.push(xmlUrl('https://noteshub.com', 'weekly', '1.0', lastmod));
+  urls.push(xmlUrl(base, 'weekly', '1.0', lastmod));
 
   // Static pages
   const staticPages = [
-    { loc: 'https://noteshub.com/courses', freq: 'weekly', priority: '0.9' },
-    { loc: 'https://noteshub.com/search', freq: 'monthly', priority: '0.5' },
-    { loc: 'https://noteshub.com/about', freq: 'monthly', priority: '0.5' },
-    { loc: 'https://noteshub.com/contact', freq: 'monthly', priority: '0.5' }
+    { loc: `${base}/courses`, freq: 'weekly', priority: '0.9' },
+    { loc: `${base}/search`, freq: 'monthly', priority: '0.5' },
+    { loc: `${base}/about`, freq: 'monthly', priority: '0.5' },
+    { loc: `${base}/contact`, freq: 'monthly', priority: '0.5' }
   ];
 
   staticPages.forEach((page) => {
@@ -150,12 +153,12 @@ export function generateSitemapXml() {
 
   // Course pages
   COURSES.forEach((course) => {
-    const courseUrl = `https://noteshub.com/course/${course.slug}`;
+    const courseUrl = `${base}/course/${course.slug}`;
     urls.push(xmlUrl(courseUrl, 'weekly', '0.9', lastmod));
 
     // Semester pages
     SEMESTERS.forEach((semester) => {
-      const semesterUrl = `https://noteshub.com/course/${course.slug}/${semester}`;
+      const semesterUrl = `${base}/course/${course.slug}/${semester}`;
       urls.push(xmlUrl(semesterUrl, 'weekly', '0.8', lastmod));
 
       // Subject pages
@@ -164,7 +167,7 @@ export function generateSitemapXml() {
         const subjects = courseSubjects[semester];
         if (subjects) {
           subjects.forEach((subject) => {
-            const subjectUrl = `https://noteshub.com/course/${course.slug}/${semester}/${subject}`;
+            const subjectUrl = `${base}/course/${course.slug}/${semester}/${subject}`;
             urls.push(xmlUrl(subjectUrl, 'weekly', '0.7', lastmod));
           });
         }

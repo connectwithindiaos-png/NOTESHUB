@@ -1,8 +1,9 @@
 const db = require('../config/database');
+const config = require('../config');
 
 class SEOService {
   async generateSitemap() {
-    const baseUrl = process.env.CORS_ORIGIN || 'http://localhost:5173';
+    const baseUrl = config.siteUrl;
     let xml = '<?xml version="1.0" encoding="UTF-8"?>\n';
     xml += '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n';
 
@@ -42,7 +43,7 @@ class SEOService {
   }
 
   generateRobotsTxt() {
-    const baseUrl = process.env.CORS_ORIGIN || 'http://localhost:5173';
+    const baseUrl = config.siteUrl;
     return `User-agent: *
 Allow: /
 Disallow: /api/
@@ -100,7 +101,7 @@ Sitemap: ${baseUrl}/api/v1/seo/sitemap.xml
   }
 
   async generateBreadcrumbs(items) {
-    const baseUrl = process.env.CORS_ORIGIN || 'http://localhost:5173';
+    const baseUrl = config.siteUrl;
     const itemListElement = items.map((item, index) => ({
       '@type': 'ListItem',
       position: index + 1,
