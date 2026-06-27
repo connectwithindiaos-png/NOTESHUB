@@ -1,4 +1,4 @@
-import { SITE_URL } from './config'
+import { SITE_URL } from './config.js'
 
 export function getCanonicalUrl(path) {
   const cleanPath = path.startsWith('/') ? path : `/${path}`;

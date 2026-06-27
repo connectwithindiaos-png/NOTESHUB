@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import { getBreadcrumbSchema } from '../../utils/schema';
-import { SITE_URL } from '../../utils/config';
+import { SITE_URL } from '../../utils/config.js';
 import SchemaMarkup from './SchemaMarkup';
 
 export default function Breadcrumbs({ items }) {

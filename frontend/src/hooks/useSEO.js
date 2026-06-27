@@ -1,5 +1,5 @@
 import { useMemo } from 'react';
-import { SITE_URL } from '../utils/config'
+import { SITE_URL } from '../utils/config.js'
 
 export function useSEO(pageType, data) {
   return useMemo(() => {

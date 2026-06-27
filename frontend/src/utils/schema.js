@@ -1,4 +1,4 @@
-import { SITE_URL } from './config'
+import { SITE_URL } from './config.js'
 
 export function getWebsiteSchema() {
   return {

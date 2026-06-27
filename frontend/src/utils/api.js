@@ -1,4 +1,4 @@
-import { API_URL } from './config'
+import { API_URL } from './config.js'
 const API_BASE = API_URL
 
 const KEY_MAP = {

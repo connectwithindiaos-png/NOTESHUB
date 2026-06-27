@@ -115,7 +115,7 @@ const SUBJECTS = {
   }
 };
 
-import { SITE_URL } from './config'
+import { SITE_URL } from './config.js'
 
 function getLastMod() {
   const now = new Date();
