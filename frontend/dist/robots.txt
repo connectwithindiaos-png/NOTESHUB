@@ -11,5 +11,3 @@ Disallow: /login
 Disallow: /register
 Disallow: /api
 Disallow: /profile
-Sitemap: https://noteshub.com/sitemap.xml
-Host: https://noteshub.com

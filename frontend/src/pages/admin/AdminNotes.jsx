@@ -1,10 +1,10 @@
 import { useState, useEffect } from 'react'
-import { fetchAdminNotes, createNote, updateNote, deleteNote } from '../../utils/api'
+import { fetchAdminNotes, fetchAdminCourses, fetchAdminSemesters, fetchAdminSubjects, createNote, updateNote, deleteNote } from '../../utils/api'
 import ConfirmModal from '../../components/admin/ConfirmModal'
 import toast from 'react-hot-toast'
 
 const emptyForm = {
-  subjectId: '', title: '', description: '', driveUrl: '', category: 'note',
+  courseSlug: '', semesterId: '', subjectId: '', title: '', description: '', driveUrl: '', category: 'note',
   fileType: 'pdf', isPremium: false, isFree: true, tags: '',
 }
 
@@ -18,6 +18,9 @@ export default function AdminNotes() {
   const [confirm, setConfirm] = useState({ open: false, id: '', title: '' })
   const [saving, setSaving] = useState(false)
   const [totalPages, setTotalPages] = useState(1)
+  const [courses, setCourses] = useState([])
+  const [allSemesters, setAllSemesters] = useState([])
+  const [allSubjects, setAllSubjects] = useState([])
 
   const load = () => {
     setLoading(true)
@@ -36,7 +39,39 @@ export default function AdminNotes() {
       .finally(() => setLoading(false))
   }
 
+  const loadCourses = () => {
+    fetchAdminCourses()
+      .then(data => setCourses(Array.isArray(data) ? data : []))
+      .catch(() => {})
+  }
+
+  const loadSemesters = () => {
+    fetchAdminSemesters()
+      .then(data => setAllSemesters(Array.isArray(data) ? data : []))
+      .catch(() => {})
+  }
+
+  const loadSubjects = () => {
+    fetchAdminSubjects()
+      .then(data => setAllSubjects(Array.isArray(data) ? data : []))
+      .catch(() => {})
+  }
+
   useEffect(() => { load() }, [page])
+  useEffect(() => { loadCourses(); loadSemesters(); loadSubjects() }, [])
+
+  const filteredSemesters = allSemesters.filter(s => {
+    if (!form.courseSlug) return false
+    return s.courseSlug === form.courseSlug
+  })
+
+  const filteredSubjects = allSubjects.filter(s => {
+    if (!form.semesterId) return false
+    return s.semesterId === form.semesterId
+  })
+
+  const selectedCourse = courses.find(c => c.slug === form.courseSlug)
+  const courseId = selectedCourse?.id || ''
 
   const handleSubmit = async (e) => {
     e.preventDefault()
@@ -44,6 +79,7 @@ export default function AdminNotes() {
     try {
       const payload = {
         ...form,
+        courseId,
         tags: form.tags ? form.tags.split(',').map(t => t.trim()) : [],
         isPremium: form.isPremium === true || form.isPremium === 'true',
         isFree: form.isFree === true || form.isFree === 'true',
@@ -69,6 +105,8 @@ export default function AdminNotes() {
   const handleEdit = (note) => {
     setEditing(note.id)
     setForm({
+      courseSlug: note.courseSlug || '',
+      semesterId: note.semesterId || '',
       subjectId: note.subjectId || '',
       title: note.title || '',
       description: note.description || '',
@@ -140,8 +178,31 @@ export default function AdminNotes() {
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
             <div>
-              <label className="block font-mono text-xs text-stone-500 dark:text-stone-400 mb-1.5 uppercase tracking-wider">Subject ID *</label>
-              <input type="text" value={form.subjectId} onChange={(e) => setForm({ ...form, subjectId: e.target.value })} className="w-full px-3 py-2.5 bg-stone-50 dark:bg-stone-700 border border-stone-200 dark:border-stone-600 rounded-xl text-sm text-stone-900 dark:text-stone-100 focus:outline-none focus:ring-2 focus:ring-amber-400 focus:border-transparent transition-all font-mono text-xs" placeholder="Subject UUID" required />
+              <label className="block font-mono text-xs text-stone-500 dark:text-stone-400 mb-1.5 uppercase tracking-wider">Course *</label>
+              <select value={form.courseSlug} onChange={(e) => setForm({ ...form, courseSlug: e.target.value, semesterId: '', subjectId: '' })} className="w-full px-3 py-2.5 bg-stone-50 dark:bg-stone-700 border border-stone-200 dark:border-stone-600 rounded-xl text-sm text-stone-900 dark:text-stone-100 focus:outline-none focus:ring-2 focus:ring-amber-400 focus:border-transparent transition-all" required>
+                <option value="">Select course</option>
+                {courses.map((c) => (
+                  <option key={c.slug} value={c.slug}>{c.name}</option>
+                ))}
+              </select>
+            </div>
+            <div>
+              <label className="block font-mono text-xs text-stone-500 dark:text-stone-400 mb-1.5 uppercase tracking-wider">Semester *</label>
+              <select value={form.semesterId} onChange={(e) => setForm({ ...form, semesterId: e.target.value, subjectId: '' })} className="w-full px-3 py-2.5 bg-stone-50 dark:bg-stone-700 border border-stone-200 dark:border-stone-600 rounded-xl text-sm text-stone-900 dark:text-stone-100 focus:outline-none focus:ring-2 focus:ring-amber-400 focus:border-transparent transition-all" required>
+                <option value="">Select semester</option>
+                {filteredSemesters.map((s) => (
+                  <option key={s.id} value={s.id}>Semester {s.semesterNumber} — {s.name || ''}</option>
+                ))}
+              </select>
+            </div>
+            <div>
+              <label className="block font-mono text-xs text-stone-500 dark:text-stone-400 mb-1.5 uppercase tracking-wider">Subject *</label>
+              <select value={form.subjectId} onChange={(e) => setForm({ ...form, subjectId: e.target.value })} className="w-full px-3 py-2.5 bg-stone-50 dark:bg-stone-700 border border-stone-200 dark:border-stone-600 rounded-xl text-sm text-stone-900 dark:text-stone-100 focus:outline-none focus:ring-2 focus:ring-amber-400 focus:border-transparent transition-all" required>
+                <option value="">Select subject</option>
+                {filteredSubjects.map((s) => (
+                  <option key={s.id} value={s.id}>{s.name} {s.code ? `(${s.code})` : ''}</option>
+                ))}
+              </select>
             </div>
             <div>
               <label className="block font-mono text-xs text-stone-500 dark:text-stone-400 mb-1.5 uppercase tracking-wider">Title *</label>
