@@ -35,7 +35,10 @@ class SubjectService {
   }
 
   async _resolveSemester(semesterId) {
-    let semester = await semesterRepository.findById(semesterId);
+    let semester = null;
+    try {
+      semester = await semesterRepository.findById(semesterId);
+    } catch (_) {}
     if (!semester && typeof semesterId === 'string' && semesterId.includes(':')) {
       const [courseSlug, semValue] = semesterId.split(':');
       const course = await courseRepository.findBySlug(courseSlug);

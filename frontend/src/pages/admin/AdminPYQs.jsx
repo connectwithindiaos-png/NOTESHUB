@@ -78,9 +78,14 @@ export default function AdminPYQs() {
     setSaving(true)
     try {
       const payload = {
-        ...form,
+        subjectId: form.subjectId,
+        semesterId: form.semesterId,
         courseId,
+        title: form.title,
+        description: form.description,
+        driveUrl: form.driveUrl,
         category: 'pyq',
+        fileType: form.fileType,
         tags: form.tags ? form.tags.split(',').map(t => t.trim()) : [],
         isPremium: form.isPremium === true || form.isPremium === 'true',
         isFree: form.isFree === true || form.isFree === 'true',

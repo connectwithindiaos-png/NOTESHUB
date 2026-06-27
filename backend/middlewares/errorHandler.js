@@ -21,7 +21,7 @@ function errorHandler(err, req, res, next) {
     console.error('Error:', err);
   }
 
-  if (!err.isOperational) {
+  if (!err.isOperational && !err.code) {
     if (config.nodeEnv === 'production') {
       message = 'Internal Server Error';
     }

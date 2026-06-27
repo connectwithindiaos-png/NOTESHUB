@@ -23,12 +23,12 @@ class SubjectRepository {
   }
 
   async create(data) {
-    const { semesterId, courseId, name, slug, code, description, longDescription, syllabus } = data;
+    const { semesterId, courseId, name, slug, code, description, longDescription, syllabus, organiser } = data;
     const result = await db.query(
-      `INSERT INTO subjects (semester_id, course_id, name, slug, code, description, long_description, syllabus)
-       VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
+      `INSERT INTO subjects (semester_id, course_id, name, slug, code, description, long_description, syllabus, organiser)
+       VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)
        RETURNING *`,
-      [semesterId, courseId, name, slug, code, description, longDescription, syllabus ? JSON.stringify(syllabus) : null]
+      [semesterId, courseId, name, slug, code, description, longDescription, syllabus ? JSON.stringify(syllabus) : null, organiser ? JSON.stringify(organiser) : null]
     );
     return result.rows[0];
   }
