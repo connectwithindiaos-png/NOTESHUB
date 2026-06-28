@@ -14,6 +14,10 @@ const registerValidation = [
     .trim()
     .isLength({ min: 2, max: 255 })
     .withMessage('Full name must be between 2 and 255 characters'),
+  body('role')
+    .not()
+    .exists()
+    .withMessage('Role cannot be set during registration'),
   validate,
 ];
 

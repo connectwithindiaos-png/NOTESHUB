@@ -4,13 +4,13 @@ const { generateAccessToken, generateRefreshToken, verifyRefreshToken } = requir
 const { ConflictError, UnauthorizedError, NotFoundError } = require('../utils/errors');
 
 class AuthService {
-  async register({ email, password, fullName, role = 'student' }) {
+  async register({ email, password, fullName }) {
     const existing = await userRepository.findByEmail(email);
     if (existing) {
       throw new ConflictError('Email already registered');
     }
     const passwordHash = await bcrypt.hash(password, 12);
-    const user = await userRepository.create({ email, passwordHash, fullName, role });
+    const user = await userRepository.create({ email, passwordHash, fullName, role: 'student' });
     const accessToken = generateAccessToken({ userId: user.id, role: user.role });
     const refreshToken = generateRefreshToken({ userId: user.id, role: user.role });
     return { user, accessToken, refreshToken };
